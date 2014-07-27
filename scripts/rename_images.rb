@@ -1,12 +1,11 @@
 # Scenario: rename all the images inside ../imgs.sikuli and inside features, step_deinitions too
 #   Given there are an image named as "284_398img.png" in "example_1.11.feature" file
 #   If I run jruby ./rename_imgs.rb
-#   Then I should see image in file named as "example_1.11#284_398img.png"
-#   And "example_1.11#284_398img.png" inside ../imgs.sikuli folder
+#   Then I should see image "284_398img.png" in "../imgs.sikuli/example_1.11" folder
 
 require 'fileutils'
 
-def renameImages (files, prefix = "")
+def renameImages (files, prefix = "default")
   files.each do |fname|
     if !File.directory?(fname)
       if block_given?
