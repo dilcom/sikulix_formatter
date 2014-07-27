@@ -5,7 +5,7 @@ include SikuliX4Ruby
 
 ImagePath.setBundlePath "#{File.dirname(__FILE__)}\/..\/..\/imgs.sikuli"
 
-CAPTURE_PATTERN = Transform /("[0-9]+\.png"|Pattern.*)/ do |pattern|
+CAPTURE_PATTERN = Transform /("[A-Za-z@_0-9\.-\/]+\.png"|Pattern.*)/ do |pattern|
   eval pattern
 end
 
@@ -43,9 +43,9 @@ Given /^(#{CAPTURE_PATTERN}) is found by scrolling (#{CAPTURE_PATTERN})$/ do |el
 end
 
 Given /^text fragment selected$/ do
-  click("1400351083105.png")
-  hover(Pattern("1400351083105.png").targetOffset(-23,18))
+  click("steps/1400351083105.png")
+  hover(Pattern("steps/1400351083105.png").targetOffset(-23,18))
   mouseDown(Button.LEFT)
-  hover(Pattern("1400351093763.png").targetOffset(-29,-23))
+  hover(Pattern("steps/1400351093763.png").targetOffset(-29,-23))
   mouseUp(Button.LEFT)
 end

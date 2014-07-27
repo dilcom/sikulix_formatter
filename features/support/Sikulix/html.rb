@@ -25,7 +25,7 @@ module Sikulix
       @img_id = 0
       @inside_outline = false
       @img_dir = "../imgs.sikuli"
-      @image_name_regexp = /[A-Za-z_0-9]+\.png/
+      @image_name_regexp = /[A-Za-z_0-9@\.\/]+\.png/
     end
 
     def embed(src, mime_type, label)
