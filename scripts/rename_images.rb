@@ -29,6 +29,39 @@ def renameImages (files, prefix = "default")
   end
 end
 
+def removeUnused
+  arr = []
+  Dir.glob("../features/**/*") do |filename|
+    if !File.directory?(filename)
+      File.open(filename) do |file|
+        file.read.scan(/"([^\] ]+?\.png)"/).each { |el| arr << el[0]}
+      end
+    end
+  end
+  File.open "../imgs.sikuli/imgs.rb" do |file|
+    file.read.scan(/"([^\] ]+?\.png)"/).each { |el| arr << el[0]}
+  end
+
+  arr = arr.uniq
+  trash = []
+  Dir.glob("../imgs.sikuli/**/*.png") do |filename|
+    a = filename.scan(/\/imgs\.sikuli\/(.*)/)[0][0]
+    if a && !arr.include?(a) && !File.directory?(filename)
+      trash << filename
+    end
+  end
+  
+  if trash.size > 0
+    print "Some imgs are unused. #{trash.size} will be removed.\nAre you Sure?[No]:"
+    str = gets
+    if str.match /(y|Y)/
+      trash.each { |fn| File.delete(fn) }
+    end
+  else
+    puts "No unused images!"
+  end
+end
+
 renameImages Dir.glob("../features/step_definitions/**"), "steps"
 renameImages Dir.glob("../features/support/**"), "support"
 renameImages Dir.glob("../features/*") do |fname|
@@ -44,5 +77,5 @@ end
 puts "Do you want to remove unused images? [yN]:"
 answer = gets
 if answer =~ /[Yy]/n
-  # TODO remove unused imgs here
+  removeUnused
 end
